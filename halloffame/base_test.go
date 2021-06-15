@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/kva3umoda/go-ga/genome"
+	"github.com/kva3umoda/go-ga/population"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -12,12 +13,12 @@ func TestBaseOne_Update(t *testing.T) {
 
 	tests := []struct {
 		name   string
-		input  []genome.Individual
-		output []genome.Individual
+		input  []*genome.Individual
+		output []*genome.Individual
 	}{
 		{
 			name: "first",
-			input: []genome.Individual{
+			input: []*genome.Individual{
 				{Fitness: 5, Genome: []float64{5000}},
 				{Fitness: 6, Genome: []float64{6000}},
 				{Fitness: 7, Genome: []float64{7000}},
@@ -25,14 +26,14 @@ func TestBaseOne_Update(t *testing.T) {
 				{Fitness: 1, Genome: []float64{1000}},
 				{Fitness: 2, Genome: []float64{2000}},
 			},
-			output: []genome.Individual{
+			output: []*genome.Individual{
 				{Fitness: 7, Genome: []float64{7000}},
 			},
 		},
 
 		{
 			name: "second",
-			input: []genome.Individual{
+			input: []*genome.Individual{
 				{Fitness: 1, Genome: []float64{1001}},
 				{Fitness: 7, Genome: []float64{7001}},
 				{Fitness: 5, Genome: []float64{5001}},
@@ -40,14 +41,14 @@ func TestBaseOne_Update(t *testing.T) {
 				{Fitness: 3, Genome: []float64{3001}},
 				{Fitness: 2, Genome: []float64{2001}},
 			},
-			output: []genome.Individual{
+			output: []*genome.Individual{
 				{Fitness: 7, Genome: []float64{7001}},
 			},
 		},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			halloffame.Update(&genome.Population{Individuals: test.input})
+			halloffame.Update(&population.Population{Individuals: test.input})
 			assert.Equal(t, test.output, halloffame.Individuals(), test.name)
 		})
 	}
@@ -60,12 +61,12 @@ func TestBaseThree_Update(t *testing.T) {
 
 	tests := []struct {
 		name   string
-		input  []genome.Individual
-		output []genome.Individual
+		input  []*genome.Individual
+		output []*genome.Individual
 	}{
 		{
 			name: "first",
-			input: []genome.Individual{
+			input: []*genome.Individual{
 				{Fitness: 5, Genome: []float64{5000}},
 				{Fitness: 6, Genome: []float64{6000}},
 				{Fitness: 7, Genome: []float64{7000}},
@@ -73,7 +74,7 @@ func TestBaseThree_Update(t *testing.T) {
 				{Fitness: 1, Genome: []float64{1000}},
 				{Fitness: 2, Genome: []float64{2000}},
 			},
-			output: []genome.Individual{
+			output: []*genome.Individual{
 				{Fitness: 7, Genome: []float64{7000}},
 				{Fitness: 6, Genome: []float64{6000}},
 				{Fitness: 5, Genome: []float64{5000}},
@@ -81,13 +82,13 @@ func TestBaseThree_Update(t *testing.T) {
 		},
 		{
 			name: "second",
-			input: []genome.Individual{
+			input: []*genome.Individual{
 				{Fitness: 1, Genome: []float64{1001}},
 				{Fitness: 7, Genome: []float64{7001}},
 				{Fitness: 3, Genome: []float64{3001}},
 				{Fitness: 2, Genome: []float64{2001}},
 			},
-			output: []genome.Individual{
+			output: []*genome.Individual{
 				{Fitness: 7, Genome: []float64{7001}},
 				{Fitness: 7, Genome: []float64{7000}},
 				{Fitness: 6, Genome: []float64{6000}},
@@ -95,14 +96,14 @@ func TestBaseThree_Update(t *testing.T) {
 		},
 		{
 			name: "three",
-			input: []genome.Individual{
+			input: []*genome.Individual{
 				{Fitness: 5, Genome: []float64{5002}},
 				{Fitness: 6, Genome: []float64{6002}},
 				{Fitness: 3, Genome: []float64{3002}},
 				{Fitness: 1, Genome: []float64{1002}},
 				{Fitness: 2, Genome: []float64{2002}},
 			},
-			output: []genome.Individual{
+			output: []*genome.Individual{
 				{Fitness: 7, Genome: []float64{7001}},
 				{Fitness: 7, Genome: []float64{7000}},
 				{Fitness: 6, Genome: []float64{6002}},
@@ -112,7 +113,7 @@ func TestBaseThree_Update(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			halloffame.Update(&genome.Population{Individuals: test.input})
+			halloffame.Update(&population.Population{Individuals: test.input})
 			assert.Equal(t, test.output, halloffame.Individuals(), test.name)
 		})
 	}

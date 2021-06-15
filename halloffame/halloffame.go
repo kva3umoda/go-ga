@@ -1,8 +1,11 @@
 package halloffame
 
-import "ga-book/internal/genome"
+import (
+	"github.com/kva3umoda/go-ga/genome"
+	"github.com/kva3umoda/go-ga/population"
+)
 
 type HallOfFame interface {
-	Update(population *genome.Population)
-	Individuals() []genome.Individual
+	Update(population *population.Population)
+	Individuals() []*genome.Individual
 }

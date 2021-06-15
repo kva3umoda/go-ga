@@ -1,4 +1,4 @@
-package selectors
+package selector
 
 import "github.com/kva3umoda/go-ga/genome"
 

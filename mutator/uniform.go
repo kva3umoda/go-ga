@@ -1,4 +1,6 @@
-package mutators
+package mutator
+
+import "github.com/kva3umoda/go-ga/genome"
 
 type UniformInt struct {
 
@@ -9,7 +11,7 @@ func NewUniformInt() *UniformInt {
 	return &UniformInt{}
 }
 
-func (u *UniformInt) Mutate(individual []float64) {
+func (u *UniformInt) Mutate(individual *genome.Individual) {
 	panic("implement me")
 }
 

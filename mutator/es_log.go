@@ -1,4 +1,6 @@
-package mutators
+package mutator
+
+import "github.com/kva3umoda/go-ga/genome"
 
 type EsLogNormal struct {
 
@@ -8,7 +10,7 @@ func NewEsLogNormal() *EsLogNormal {
 	return &EsLogNormal{}
 }
 
-func (e *EsLogNormal) Mutate(individual []float64) {
+func (e *EsLogNormal) Mutate(individual *genome.Individual) {
 	panic("implement me")
 }
 

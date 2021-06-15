@@ -1,3 +1,3 @@
-package mutators
+package mutator
 
 

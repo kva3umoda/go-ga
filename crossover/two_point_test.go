@@ -8,8 +8,8 @@ import (
 )
 
 func TestTwoPoint_Crossing(t *testing.T) {
-	ind1 := genome.Individual{Genome: []float64{0, 1, 2, 3, 4, 5}}
-	ind2 := genome.Individual{Genome: []float64{5, 4, 3, 2, 1, 0}}
+	ind1 := &genome.Individual{Genome: []float64{0, 1, 2, 3, 4, 5}}
+	ind2 := &genome.Individual{Genome: []float64{5, 4, 3, 2, 1, 0}}
 
 	cross := NewTwoPoint()
 	for i := 0; i < 100; i++ {

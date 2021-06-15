@@ -1,4 +1,6 @@
-package mutators
+package mutator
+
+import "github.com/kva3umoda/go-ga/genome"
 
 type Gaussian struct {
 
@@ -9,7 +11,7 @@ func NewGaussian() *Gaussian {
 	return &Gaussian{}
 }
 
-func (g Gaussian) Mutate(individual []float64) {
+func (g Gaussian) Mutate(individual *genome.Individual) {
 	panic("implement me")
 }
 

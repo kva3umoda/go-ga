@@ -1,10 +1,12 @@
-package mutators
+package mutator
+
+import "github.com/kva3umoda/go-ga/genome"
 
 type PolynomialBounded struct {
 
 }
 
-func (p *PolynomialBounded) Mutate(individual []float64)  {
+func (p *PolynomialBounded) Mutate(individual *genome.Individual)  {
 	panic("implement me")
 }
 

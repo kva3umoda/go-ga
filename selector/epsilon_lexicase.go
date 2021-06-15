@@ -1,4 +1,4 @@
-package selectors
+package selector
 
 
 // def selEpsilonLexicase(individuals, k, epsilon):

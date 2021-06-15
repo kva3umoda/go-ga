@@ -1,11 +1,8 @@
 package crossover
 
 import (
-	"math/rand"
-	"sync"
-	"time"
-
 	"github.com/kva3umoda/go-ga/genome"
+	"github.com/kva3umoda/go-ga/rand"
 )
 
 // https://proproprogs.ru/ga/ga-obzor-metodov-otbora-skreshchivaniya-i-mutacii
@@ -14,24 +11,18 @@ import (
 //    expects :term:`sequence` individuals of indices, the result for any other
 //    type of individuals is unpredictable.
 type Ordered struct {
-	rnd  *rand.Rand
-	lock sync.Mutex
 }
 
 func NewOrdered() *Ordered {
 	return &Ordered{
-		rnd: rand.New(rand.NewSource(time.Now().UnixNano())),
 	}
 }
 
 //  TODO: Надо оптимизировать
-func (tp *Ordered) Crossing(ind1, ind2 genome.Individual) {
-	tp.lock.Lock()
-	defer tp.lock.Unlock()
-
+func (tp *Ordered) Crossing(ind1, ind2 *genome.Individual) {
 	size := min(len(ind1.Genome), len(ind2.Genome))
-	a := tp.rnd.Intn(size)
-	b := tp.rnd.Intn(size)
+	a := rand.Int(size)
+	b := rand.Int(size)
 	if a > b {
 		a, b = b, a
 	}

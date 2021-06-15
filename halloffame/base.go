@@ -1,21 +1,24 @@
 package halloffame
 
-import "github.com/kva3umoda/go-ga/genome"
+import (
+	"github.com/kva3umoda/go-ga/genome"
+	"github.com/kva3umoda/go-ga/population"
+)
 
 // TODO : покрыть тестами
 type Base struct {
 	maxSize     int
-	individuals []genome.Individual
+	individuals []*genome.Individual
 }
 
 func NewBase(maxSize int) *Base {
 	return &Base{
 		maxSize:     maxSize,
-		individuals: make([]genome.Individual, 0, maxSize+1),
+		individuals: make([]*genome.Individual, 0, maxSize+1),
 	}
 }
 
-func (hof *Base) Update(population *genome.Population) {
+func (hof *Base) Update(population *population.Population) {
 	if hof.maxSize == 0 {
 		return
 	}
@@ -32,11 +35,11 @@ func (hof *Base) Update(population *genome.Population) {
 	}
 }
 
-func (hof *Base) Individuals() []genome.Individual {
+func (hof *Base) Individuals() []*genome.Individual {
 	return hof.individuals
 }
 
-func (hof *Base) insert(item genome.Individual) {
+func (hof *Base) insert(item *genome.Individual) {
 	item = item.Clone()
 
 	var n int
@@ -52,7 +55,7 @@ func (hof *Base) insert(item genome.Individual) {
 		return
 	}
 
-	hof.individuals = append(hof.individuals, genome.Individual{})
+	hof.individuals = append(hof.individuals, nil)
 	copy(hof.individuals[n+1:], hof.individuals[n:])
 	hof.individuals[n] = item
 
@@ -62,7 +65,7 @@ func (hof *Base) insert(item genome.Individual) {
 }
 
 // Прверяет на существование индивидума
-func (hof *Base) exist(cmp genome.Individual) bool {
+func (hof *Base) exist(cmp *genome.Individual) bool {
 	for _, ind := range hof.individuals {
 		if cmp.Equal(ind) {
 			return true

@@ -1,4 +1,4 @@
-package selectors
+package selector
 
 
 // DoubleTournament - Tournament selection which use the size of the individuals in order
