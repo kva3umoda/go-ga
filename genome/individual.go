@@ -8,8 +8,8 @@ type Individual struct {
 	Genome  []float64 // геном
 }
 
-func NewIndividual(size int) *Individual {
-	return &Individual{
+func NewIndividual(size int) Individual {
+	return Individual{
 		Fitness: 0,
 		Genome:  make([]float64, size),
 	}
