@@ -35,8 +35,8 @@ func NewTournament(tournSize int) *Tournament {
 	}
 }
 
-func (r *Tournament) Select(populationSize int, individuals []genome.Individual) []genome.Individual {
-	chosen := make([]genome.Individual, 0, populationSize)
+func (r *Tournament) Select(populationSize int, individuals []*genome.Individual) []*genome.Individual {
+	chosen := make([]*genome.Individual, 0, populationSize)
 
 	for i := 0; i < populationSize; i++ {
 		// смешиваем

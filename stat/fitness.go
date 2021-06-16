@@ -38,13 +38,13 @@ func (f *Fitness) Min() []float64 {
 	return f.min
 }
 
-func (f *Fitness) Add(generation int, fitness float64) {
+func (f *Fitness) Add(generation int, value float64) {
 	f.lock.Lock()
 	defer f.lock.Unlock()
 
-	f.calcMax(generation, fitness)
-	f.calcMin(generation, fitness)
-	f.calcMean(generation, fitness)
+	f.calcMax(generation, value)
+	f.calcMin(generation, value)
+	f.calcMean(generation, value)
 }
 
 func (f *Fitness) LastMax() float64 {
@@ -57,7 +57,7 @@ func (f *Fitness) LastMax() float64 {
 	return f.max[len(f.max)-1]
 }
 
-func (f *Fitness) calcMax(generation int, fitness float64) {
+func (f *Fitness) calcMax(generation int, value float64) {
 	if cap(f.max) < (generation + 1) {
 		tmp := make([]float64, len(f.max), generation+1)
 		copy(tmp, f.max)
@@ -65,7 +65,7 @@ func (f *Fitness) calcMax(generation int, fitness float64) {
 	}
 
 	f.max = f.max[:generation+1]
-	f.max[generation] = max(f.max[generation], fitness)
+	f.max[generation] = max(f.max[generation], value)
 }
 
 func (f *Fitness) LastMin() float64 {
@@ -78,7 +78,7 @@ func (f *Fitness) LastMin() float64 {
 	return f.min[len(f.min)-1]
 }
 
-func (f *Fitness) calcMin(generation int, fitness float64) {
+func (f *Fitness) calcMin(generation int, value float64) {
 	if cap(f.min) < (generation + 1) {
 		tmp := make([]float64, len(f.min), generation+1)
 		copy(tmp, f.min)
@@ -87,11 +87,11 @@ func (f *Fitness) calcMin(generation int, fitness float64) {
 
 	if len(f.min) < (generation + 1) {
 		f.min = f.min[:generation+1]
-		f.min[generation] = fitness
+		f.min[generation] = value
 		return
 	}
 
-	f.min[generation] = min(f.min[generation], fitness)
+	f.min[generation] = min(f.min[generation], value)
 }
 
 func (f *Fitness) LastMean() float64 {
@@ -104,7 +104,7 @@ func (f *Fitness) LastMean() float64 {
 	return f.mean.mean[len(f.mean.mean)-1]
 }
 
-func (f *Fitness) calcMean(generation int, fitness float64) {
+func (f *Fitness) calcMean(generation int, value float64) {
 	if cap(f.mean.mean) < (generation + 1) {
 		tmp := make([]float64, len(f.mean.mean), generation+1)
 		copy(tmp, f.mean.mean)
@@ -127,7 +127,7 @@ func (f *Fitness) calcMean(generation int, fitness float64) {
 	f.mean.count = f.mean.count[:generation+1]
 	f.mean.mean = f.mean.mean[:generation+1]
 
-	f.mean.sum[generation] += fitness
+	f.mean.sum[generation] += value
 	f.mean.count[generation] += 1.0
 	f.mean.mean[generation] = f.mean.sum[generation] / f.mean.count[generation]
 }
