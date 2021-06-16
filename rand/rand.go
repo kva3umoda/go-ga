@@ -10,7 +10,7 @@ var globalRand = NewRandom()
 
 type Random struct {
 	rnd  *rand.Rand
-	lock sync.Locker
+	lock sync.Mutex
 }
 
 func NewRandom() *Random {

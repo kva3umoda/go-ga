@@ -1,15 +1,16 @@
 package selector
 
 import (
+	"math/rand"
 	"sort"
 	"testing"
 
-	"ga-book/internal/genome"
+	"github.com/kva3umoda/go-ga/genome"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestTournament_Select(t *testing.T) {
-	inds := []genome.Individual{
+	inds := []*genome.Individual{
 		{Fitness: 101, Genome: []float64{1}},
 		{Fitness: 102, Genome: []float64{2}},
 		{Fitness: 103, Genome: []float64{3}},
@@ -20,7 +21,7 @@ func TestTournament_Select(t *testing.T) {
 		{Fitness: 108, Genome: []float64{8}},
 		{Fitness: 109, Genome: []float64{9}},
 	}
-
+	rand.Float64()
 	selector := NewTournament(2)
 
 	for i := 0; i < 100; i++ {

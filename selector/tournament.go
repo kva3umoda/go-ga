@@ -1,12 +1,11 @@
 package selector
 
 import (
-	"math/rand"
+
 	"sort"
-	"sync"
-	"time"
 
 	"github.com/kva3umoda/go-ga/genome"
+	"github.com/kva3umoda/go-ga/rand"
 )
 
 // Турнирный отбор (Tournament selection)
@@ -23,14 +22,11 @@ import (
 // появился где-нибудь в Бразилии супер-таракан, а в России все усатые собратья тараканьи взяли (тоже бац!) и вымерли,
 // от осознания своей неприспособленности. ;)
 type Tournament struct {
-	rnd       *rand.Rand
-	lock      sync.Mutex
 	tournSize int // Размер турнира
 }
 
 func NewTournament(tournSize int) *Tournament {
 	return &Tournament{
-		rnd:       rand.New(rand.NewSource(time.Now().UnixNano())),
 		tournSize: tournSize,
 	}
 }
@@ -40,7 +36,7 @@ func (r *Tournament) Select(populationSize int, individuals []*genome.Individual
 
 	for i := 0; i < populationSize; i++ {
 		// смешиваем
-		r.rnd.Shuffle(len(individuals), func(i, j int) {
+		rand.Shuffle(len(individuals), func(i, j int) {
 			individuals[i], individuals[j] = individuals[j], individuals[i]
 		})
 		// Сортировка по возрастанию

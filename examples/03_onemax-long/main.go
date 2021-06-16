@@ -1,12 +1,14 @@
 package main
 
 import (
-	"ga-book/examples/helper"
-	"ga-book/internal"
-	"ga-book/internal/crossovers"
-	"ga-book/internal/mutators"
-	"ga-book/internal/population"
-	"ga-book/internal/selector"
+	"log"
+
+	"examples/helper"
+	"github.com/kva3umoda/go-ga"
+	"github.com/kva3umoda/go-ga/crossover"
+	"github.com/kva3umoda/go-ga/mutator"
+	"github.com/kva3umoda/go-ga/population"
+	"github.com/kva3umoda/go-ga/selector"
 )
 
 const (
@@ -20,15 +22,21 @@ const (
 )
 
 func main() {
-	conf := internal.NewConfig().
-		Population(POPULATION_SIZE, population.NewPopulationBinary(ONE_MAX_LENGTH)).
-		CostFunction(1.0, oneMaxFitness).
+	builder := go_ga.NewBuilder().
+		Population(POPULATION_SIZE).
+		Creator(population.NewBinaryPopulation(ONE_MAX_LENGTH)).
+		CostFunction(oneMaxFitness).
 		Selector(selector.NewTournament(3)).
-		Crossover(P_CROSSOVER, crossovers.NewOnePoint()).
-		Mutator(P_MUTATION, mutators.NewFlitBit(1.0/ONE_MAX_LENGTH)).
+		CrossoverProb(P_CROSSOVER).
+		Crossover(crossover.NewOnePoint()).
+		MutatorProb(P_MUTATION).
+		Mutator(mutator.NewFlitBit(1.0/ONE_MAX_LENGTH)).
 		Generation(MAX_GENERATIONS)
 
-	ga := internal.NewGA(conf)
+	ga, err := builder.Build()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	ga.Run()
 
