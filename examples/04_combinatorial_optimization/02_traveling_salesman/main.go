@@ -8,23 +8,28 @@ import (
 	"github.com/kva3umoda/go-ga/crossover"
 	"github.com/kva3umoda/go-ga/examples/helper"
 	"github.com/kva3umoda/go-ga/fitness"
+	"github.com/kva3umoda/go-ga/genome"
 	"github.com/kva3umoda/go-ga/mutator"
 	"github.com/kva3umoda/go-ga/population"
 	"github.com/kva3umoda/go-ga/selector"
 )
 
 const (
-	TSP_NAME = "bayg29.tsp"
+	TSP_NAME = "bayg29"
 
 	POPULATION_SIZE   = 300
-	MAX_GENERATIONS   = 200
+	MAX_GENERATIONS   = 300
 	HALL_OF_FAME_SIZE = 30
-	P_CROSSOVER       = 0.9 // probability for crossover
-	P_MUTATION        = 0.1 // probability for mutating an individual
+	P_CROSSOVER       = 0.99 // probability for crossover
+	P_MUTATION        = 0.2  // probability for mutating an individual
 )
 
 func main() {
-	mapCities := NewMapCities("examples/04_combinatorial_optimization/02_traveling_salesman/" + TSP_NAME)
+	mapCities := NewMapCities("examples/04_combinatorial_optimization/02_traveling_salesman/" + TSP_NAME + ".tsp")
+
+	var optimal genome.Individual
+	optimal.Genome = loadOptimalPath("examples/04_combinatorial_optimization/02_traveling_salesman/" + TSP_NAME + ".opt.tour")
+	optimal.Cost = mapCities.TotalDistance(optimal.Genome)
 
 	builder := go_ga.NewBuilder().
 		// создание бинарной популяции с размером генома равный коли
@@ -46,7 +51,7 @@ func main() {
 		// Добавляем за славы
 		HallOfFame(HALL_OF_FAME_SIZE).
 		// Элитизм
-		Elitism(3)
+		Elitism(HALL_OF_FAME_SIZE)
 
 	ga, err := builder.Build()
 	if err != nil {
@@ -56,7 +61,13 @@ func main() {
 	ga.Run()
 
 	helper.PlotFitness("examples/04_combinatorial_optimization/02_traveling_salesman/plot.png", ga.Stat())
-	best := ga.BestIndividuals()[0]
-	//printItems(best.Genome)
-	fmt.Println(best)
+	solver := ga.BestIndividuals()[0]
+	fmt.Printf("Solver: %s\n", solver.String())
+	fmt.Printf("Best  : %s\n", optimal.String())
+
+	err = mapCities.Plot("test.png", solver.Genome)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 }

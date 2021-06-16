@@ -1,5 +1,7 @@
 package genome
 
+import "fmt"
+
 // Индивидум с геномом int
 type Individual struct {
 	Fitness float64   // приспособленность
@@ -45,4 +47,8 @@ func (ind *Individual) Equal(other *Individual) bool {
 	}
 
 	return true
+}
+
+func (ind *Individual) String() string {
+	return fmt.Sprintf("cost: %v, genome: %+v", ind.Cost, ind.Genome)
 }

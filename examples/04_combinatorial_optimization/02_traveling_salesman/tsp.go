@@ -7,6 +7,11 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"gonum.org/v1/plot"
+	"gonum.org/v1/plot/plotter"
+	"gonum.org/v1/plot/plotutil"
+	"gonum.org/v1/plot/vg"
 )
 
 type City struct {
@@ -26,6 +31,31 @@ func NewMapCities(fname string) *MapCities {
 
 func (m *MapCities) Distance(i, j int) float64 {
 	return math.Sqrt(math.Pow(m.cities[i].X-m.cities[j].X, 2.0) + math.Pow(m.cities[i].Y-m.cities[j].Y, 2.0))
+}
+
+func (m *MapCities) Plot(fname string, genome []float64) error {
+	p := plot.New()
+
+	p.Title.Text = "Plotutil example"
+	p.X.Label.Text = "X"
+	p.Y.Label.Text = "Y"
+	// Draw a grid behind the data
+	//bs, err := plotter.NewPolygon(bubbleData, vg.Points(1), vg.Points(20))
+	p.Add(plotter.NewGrid())
+	for _, city := range m.cities {
+		point := plotter.Values{city.X - 10.0, city.Y - 10.0, city.X + 10.0, city.Y + 10.0}
+
+		err := plotutil.AddBoxPlots(p, 2.0, city.Name, point)
+		if err != nil {
+			return err
+		}
+	}
+
+	// Save the plot to a PNG file.
+	if err := p.Save(10*vg.Inch, 10*vg.Inch, fname); err != nil {
+		panic(err)
+	}
+	return nil
 }
 
 func (m *MapCities) TotalDistance(genome []float64) float64 {
@@ -123,7 +153,10 @@ func loadOptimalPath(fname string) []float64 {
 		if err != nil {
 			log.Fatal(err)
 		}
-		genome = append(genome, f)
+		if f < 0 {
+			continue
+		}
+		genome = append(genome, f-1)
 	}
 	return genome
 }

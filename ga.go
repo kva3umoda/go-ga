@@ -94,23 +94,15 @@ func (ga *GA) Population() *population.Population {
 
 func (ga *GA) Crossing(pop *population.Population) {
 	size := len(pop.Individuals)
-	for i := 0; i < size/2; i++ {
+	for i := 1; i < size; i += 2 {
 		if rand.Float() < ga.crossoverProb {
-			ga.crossover.Crossing(pop.Individuals[i], pop.Individuals[i+1])
+			ga.crossover.Crossing(pop.Individuals[i-1], pop.Individuals[i])
+			pop.Individuals[i-1].Fitness = 0
+			pop.Individuals[i-1].Cost = 0
+			pop.Individuals[i].Fitness = 0
+			pop.Individuals[i].Cost = 0
 		}
-		pop.Individuals[i].Fitness = 0
-		pop.Individuals[i].Cost = 0
-		pop.Individuals[i+1].Fitness = 0
-		pop.Individuals[i+1].Cost = 0
 	}
-	// скрещивание если размер популции нечетное число
-	/*if size/2*2 < size {
-		if rand.Float() < ga.crossoverProb {
-			ga.Crossing(pop.Individuals[size-2], pop.Individuals[size-1])
-			pop.Individuals[size-1].Fitness = 0
-			pop.Individuals[size-1].Cost = 0
-		}
-	} */
 }
 
 func (ga *GA) Fitness(pop *population.Population) {
@@ -126,7 +118,10 @@ func (ga *GA) HallOfFame(pop *population.Population) {
 		return
 	}
 	inds := ga.hallOfFame.Individuals()
-	for i := 0; i < ga.elitismSize; i++ {
+	for i := 0; i < len(inds); i++ {
+		if i >= ga.elitismSize {
+			break
+		}
 		pop.Individuals = append(pop.Individuals, inds[i])
 		ga.stat.Add(ga.generation, inds[i].Cost)
 	}
