@@ -1,7 +1,6 @@
 package selector
 
 import (
-	"math/rand"
 	"sort"
 	"testing"
 
@@ -21,7 +20,7 @@ func TestTournament_Select(t *testing.T) {
 		{Fitness: 108, Genome: []float64{8}},
 		{Fitness: 109, Genome: []float64{9}},
 	}
-	rand.Float64()
+
 	selector := NewTournament(2)
 
 	for i := 0; i < 100; i++ {
