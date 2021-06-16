@@ -2,14 +2,15 @@ package main
 
 import (
 	"fmt"
+	"log"
 
-	"ga-book/examples/helper"
-	"ga-book/internal"
-	"ga-book/internal/crossovers"
-	"ga-book/internal/halloffame"
-	"ga-book/internal/mutators"
-	"ga-book/internal/population"
-	"ga-book/internal/selector"
+	go_ga "github.com/kva3umoda/go-ga"
+	"github.com/kva3umoda/go-ga/crossover"
+	"github.com/kva3umoda/go-ga/examples/helper"
+	"github.com/kva3umoda/go-ga/fitness"
+	"github.com/kva3umoda/go-ga/mutator"
+	"github.com/kva3umoda/go-ga/population"
+	"github.com/kva3umoda/go-ga/selector"
 )
 
 const (
@@ -23,31 +24,38 @@ const (
 )
 
 func main() {
-	mapCities := NewMapCities(helper.GetCurDir() + "/examples/04_combinatorial_optimization/02_traveling_salesman/" + TSP_NAME)
+	mapCities := NewMapCities("examples/04_combinatorial_optimization/02_traveling_salesman/" + TSP_NAME)
 
-	conf := internal.NewConfig().
+	builder := go_ga.NewBuilder().
 		// создание бинарной популяции с размером генома равный коли
-		Population(POPULATION_SIZE, population.NewPopulationOrdered(len(mapCities.cities))).
+		Population(POPULATION_SIZE).
+		Creator(population.NewOrderedPopulation(len(mapCities.cities))).
 		// функция оценки
-		CostFunction(-1.0, mapCities.TotalDistance).
+		CostFunction(mapCities.TotalDistance).
+		Fitness(fitness.NewMin()).
 		// алгоритм отбора
 		Selector(selector.NewTournament(2)).
 		// алгоритм скрещивания
-		Crossover(P_CROSSOVER, crossovers.NewOrdered()).
+		CrossoverProb(P_CROSSOVER).
+		Crossover(crossover.NewOrdered()).
 		// алгоритм мутации
-		Mutator(P_MUTATION, mutators.NewShuffleIndexes(1.0/float64(len(mapCities.cities)))).
+		MutatorProb(P_MUTATION).
+		Mutator(mutator.NewShuffleIndexes(1.0 / float64(len(mapCities.cities)))).
 		// количество эпох
 		Generation(MAX_GENERATIONS).
 		// Добавляем за славы
-		HallOfFame(halloffame.NewBase(HALL_OF_FAME_SIZE)).
+		HallOfFame(HALL_OF_FAME_SIZE).
 		// Элитизм
 		Elitism(3)
 
-	ga := internal.NewGA(conf)
+	ga, err := builder.Build()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	ga.Run()
 
-	helper.PlotFitness(helper.GetCurDir()+"/examples/04_combinatorial_optimization/02_traveling_salesman/plot.png", ga.Stat())
+	helper.PlotFitness("examples/04_combinatorial_optimization/02_traveling_salesman/plot.png", ga.Stat())
 	best := ga.BestIndividuals()[0]
 	//printItems(best.Genome)
 	fmt.Println(best)

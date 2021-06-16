@@ -102,7 +102,6 @@ func (ga *GA) Crossing(pop *population.Population) {
 		pop.Individuals[i].Cost = 0
 		pop.Individuals[i+1].Fitness = 0
 		pop.Individuals[i+1].Cost = 0
-
 	}
 	// скрещивание если размер популции нечетное число
 	/*if size/2*2 < size {
@@ -147,8 +146,9 @@ func (ga *GA) Begin() {
 	ga.Fitness(ga.population)
 
 	if ga.hallOfFame == nil {
-		ga.hallOfFame.Update(ga.population)
+		return
 	}
+	ga.hallOfFame.Update(ga.population)
 }
 
 func (ga *GA) Evolute() {

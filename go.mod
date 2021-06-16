@@ -14,5 +14,6 @@ require (
 	github.com/thoj/go-galib v0.0.0-20151228162745-babb0d627a72
 	github.com/tomcraven/goga v0.0.0-20160417173515-3b7915ecdd7b
 	golang.org/x/image v0.0.0-20210607152325-775e3b0c77b9 // indirect
+	gonum.org/v1/plot v0.9.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c
 )

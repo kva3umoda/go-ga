@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
+	"log"
 
-	"ga-book/examples/helper"
-	"ga-book/internal"
-	"ga-book/internal/crossovers"
-	"ga-book/internal/halloffame"
-	"ga-book/internal/mutators"
-	"ga-book/internal/population"
-	"ga-book/internal/selector"
+	go_ga "github.com/kva3umoda/go-ga"
+	"github.com/kva3umoda/go-ga/crossover"
+	"github.com/kva3umoda/go-ga/examples/helper"
+	"github.com/kva3umoda/go-ga/mutator"
+	"github.com/kva3umoda/go-ga/population"
+	"github.com/kva3umoda/go-ga/selector"
 )
 
 const (
@@ -21,29 +21,35 @@ const (
 )
 
 func main() {
-	conf := internal.NewConfig().
+	builder := go_ga.NewBuilder().
 		// создание бинарной популяции с размером генома равный коли
-		Population(POPULATION_SIZE, population.NewPopulationBinary(len(items))).
+		Population(POPULATION_SIZE).
+		Creator(population.NewBinaryPopulation(len(items))).
 		// функция оценки
-		CostFunction(1.0, calcValue).
+		CostFunction(calcValue).
 		// алгоритм отбора
 		Selector(selector.NewTournament(3)).
 		// алгоритм скрещивания
-		Crossover(P_CROSSOVER, crossovers.NewOrdered()).
+		CrossoverProb(P_CROSSOVER).
+		Crossover(crossover.NewOrdered()).
 		// алгоритм мутации
-		Mutator(P_MUTATION, mutators.NewShuffleIndexes(1.0/float64(len(items)))).
+		MutatorProb(P_MUTATION).
+		Mutator(mutator.NewShuffleIndexes(1.0 / float64(len(items)))).
 		// количество эпох
 		Generation(MAX_GENERATIONS).
 		// Добавляем за славы
-		HallOfFame(halloffame.NewBase(HALL_OF_FAME_SIZE)).
+		HallOfFame(HALL_OF_FAME_SIZE).
 		// Элитизм
 		Elitism(3)
 
-	ga := internal.NewGA(conf)
+	ga, err := builder.Build()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	ga.Run()
 
-	helper.PlotFitness(helper.GetCurDir()+"/examples/04_combinatorial_optimization/01_knapsack/knapsack.png", ga.Stat())
+	helper.PlotFitness("examples/04_combinatorial_optimization/01_knapsack/knapsack.png", ga.Stat())
 	best := ga.BestIndividuals()[0]
 	printItems(best.Genome)
 	fmt.Println(best)

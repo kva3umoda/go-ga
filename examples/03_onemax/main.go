@@ -3,9 +3,10 @@ package main
 import (
 	"log"
 
-	"examples/helper"
+
 	"github.com/kva3umoda/go-ga"
 	"github.com/kva3umoda/go-ga/crossover"
+	"github.com/kva3umoda/go-ga/examples/helper"
 	"github.com/kva3umoda/go-ga/mutator"
 	"github.com/kva3umoda/go-ga/population"
 	"github.com/kva3umoda/go-ga/selector"
@@ -40,7 +41,7 @@ func main() {
 
 	ga.Run()
 
-	helper.PlotFitness("plot.png", ga.Stat())
+	helper.PlotFitness("examples/03_onemax/plot.png", ga.Stat())
 
 }
 
