@@ -8,11 +8,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestOrdered_Crossing(t *testing.T) {
-
+func TestUniformPartialMatched_Crossing(t *testing.T) {
 	ind1 := genome.Individual{Genome: []float64{0, 1, 2, 3, 4, 5, 6, 7, 8}}
 	ind2 := genome.Individual{Genome: []float64{8, 7, 6, 5, 4, 3, 2, 1, 0}}
-	ordered := Ordered()
+	ordered := UniformPartialMatched(0.5)
 
 	for i := 0; i < 100; i++ {
 		nind1 := ind1.Clone()

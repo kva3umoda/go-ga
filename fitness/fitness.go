@@ -6,38 +6,38 @@ type Fitness interface {
 	Fitness(cost float64) float64
 }
 
-type Function struct {
+type function struct {
 	fitnessFunc FitnessFunc
 }
 
-func NewFunction(fitnessFunc FitnessFunc) *Function {
-	return &Function{
+func Function(fitnessFunc FitnessFunc) Fitness {
+	return &function{
 		fitnessFunc: fitnessFunc,
 	}
 }
 
-func (f *Function) Fitness(cost float64) float64 {
+func (f *function) Fitness(cost float64) float64 {
 	return f.fitnessFunc(cost)
 }
 
-type Max struct {
+// max fitness
+type max struct{}
+
+func Max() Fitness {
+	return &max{}
 }
 
-func NewMax() *Max {
-	return &Max{}
-}
-
-func (m *Max) Fitness(cost float64) float64 {
+func (m *max) Fitness(cost float64) float64 {
 	return cost
 }
 
-type Min struct {
+// min fitness
+type min struct{}
+
+func Min() Fitness {
+	return &min{}
 }
 
-func NewMin() *Min {
-	return &Min{}
-}
-
-func (m *Min) Fitness(cost float64) float64 {
+func (m *min) Fitness(cost float64) float64 {
 	return -1 * cost
 }

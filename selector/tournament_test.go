@@ -21,7 +21,7 @@ func TestTournament_Select(t *testing.T) {
 		{Fitness: 109, Genome: []float64{9}},
 	}
 
-	selector := NewTournament(2)
+	selector := Tournament(2)
 
 	for i := 0; i < 100; i++ {
 		indsSel := selector.Select(len(inds), inds)

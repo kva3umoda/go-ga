@@ -5,17 +5,17 @@ import (
 	"github.com/kva3umoda/go-ga/rand"
 )
 
-type OrderedPopulation struct {
+type orderedPopulation struct {
 	genomeSize int
 }
 
-func NewOrderedPopulation(genomeSize int) *OrderedPopulation {
-	return &OrderedPopulation{
+func OrderedPopulation(genomeSize int) Creator {
+	return &orderedPopulation{
 		genomeSize: genomeSize,
 	}
 }
 
-func (p *OrderedPopulation) Create(populationSize int) *Population {
+func (p *orderedPopulation) Create(populationSize int) *Population {
 	pop := newPopulation(populationSize)
 	for i := 0; i < populationSize; i++ {
 		ind := genome.NewIndividual(p.genomeSize)

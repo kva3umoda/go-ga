@@ -8,7 +8,7 @@ import (
 	"github.com/kva3umoda/go-ga/rand"
 )
 
-// Турнирный отбор (Tournament selection)
+// Турнирный отбор (tournament selection)
 // Турнирный отбор может быть описан следующим образом: из популяции, содержащей N строк, выбирается случайным
 // образом t строк и лучшая строка записывается в промежуточный массив (между выбранными строками проводится турнир).
 // Эта операция повторяется N раз. Строки в полученном промежуточном массиве затем используются для скрещивания
@@ -21,17 +21,17 @@ import (
 // или иной особи во многом определяется ее окружением, насколько оно лучше или хуже ее. А иначе получилось бы, что бац!
 // появился где-нибудь в Бразилии супер-таракан, а в России все усатые собратья тараканьи взяли (тоже бац!) и вымерли,
 // от осознания своей неприспособленности. ;)
-type Tournament struct {
+type tournament struct {
 	tournSize int // Размер турнира
 }
 
-func NewTournament(tournSize int) *Tournament {
-	return &Tournament{
+func Tournament(tournSize int) Selector {
+	return &tournament{
 		tournSize: tournSize,
 	}
 }
 
-func (r *Tournament) Select(populationSize int, individuals []*genome.Individual) []*genome.Individual {
+func (r *tournament) Select(populationSize int, individuals []*genome.Individual) []*genome.Individual {
 	chosen := make([]*genome.Individual, 0, populationSize)
 
 	for i := 0; i < populationSize; i++ {

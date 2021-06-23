@@ -5,17 +5,17 @@ import (
 	"github.com/kva3umoda/go-ga/rand"
 )
 
-type BinaryPopulation struct {
+type binaryPopulation struct {
 	genomeSize int
 }
 
-func NewBinaryPopulation(genomeSize int) *BinaryPopulation {
-	return &BinaryPopulation{
+func BinaryPopulation(genomeSize int) Creator {
+	return &binaryPopulation{
 		genomeSize: genomeSize,
 	}
 }
 
-func (p *BinaryPopulation) Create(populationSize int) *Population {
+func (p *binaryPopulation) Create(populationSize int) *Population {
 	pop := newPopulation(populationSize)
 	for i := 0; i < populationSize; i++ {
 		ind := genome.NewIndividual(p.genomeSize)

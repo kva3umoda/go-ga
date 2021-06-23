@@ -34,18 +34,18 @@ func main() {
 	builder := go_ga.NewBuilder().
 		// создание бинарной популяции с размером генома равный коли
 		Population(POPULATION_SIZE).
-		Creator(population.NewOrderedPopulation(len(mapCities.cities))).
+		Creator(population.OrderedPopulation(len(mapCities.cities))).
 		// функция оценки
 		CostFunction(mapCities.TotalDistance).
-		Fitness(fitness.NewMin()).
+		Fitness(fitness.Min()).
 		// алгоритм отбора
-		Selector(selector.NewTournament(2)).
+		Selector(selector.Tournament(2)).
 		// алгоритм скрещивания
 		CrossoverProb(P_CROSSOVER).
-		Crossover(crossover.NewOrdered()).
+		Crossover(crossover.Ordered()).
 		// алгоритм мутации
 		MutatorProb(P_MUTATION).
-		Mutator(mutator.NewShuffleIndexes(1.0 / float64(len(mapCities.cities)))).
+		Mutator(mutator.ShuffleIndexes(1.0 / float64(len(mapCities.cities)))).
 		// количество эпох
 		Generation(MAX_GENERATIONS).
 		// Добавляем за славы

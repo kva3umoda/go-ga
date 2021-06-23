@@ -198,7 +198,7 @@ func (b *Builder) Build() (*GA, error) {
 
 	ga.fitness = b.fitness
 	if ga.fitness == nil {
-		ga.fitness = fitness.NewMax()
+		ga.fitness = fitness.Max()
 	}
 
 	ga.stat = stat.NewFitness(ga.maxGeneration + 1)

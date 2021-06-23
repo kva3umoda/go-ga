@@ -8,15 +8,15 @@ import (
 // Executes a two-point crossover on the input :term:`sequence`
 //   individuals. The two individuals are modified in place and both keep
 //   their original length
-type TwoPoint struct {
+type twoPoint struct {
 }
 
-func NewTwoPoint() *TwoPoint {
-	return &TwoPoint{
+func TwoPoint() Crossover {
+	return &twoPoint{
 	}
 }
 
-func (tp *TwoPoint) Crossing(ind1, ind2 *genome.Individual) {
+func (tp *twoPoint) Crossing(ind1, ind2 *genome.Individual) {
 
 	size := min(len(ind1.Genome), len(ind2.Genome))
 	cxpoint1 := rand.Int(size)       // random.randint(1, size)

@@ -10,17 +10,17 @@ import (
 //    The *individual* is expected to be a :term:`sequence`. The *indpb* argument is the
 //    probability of each attribute to be moved. Usually this mutation is applied on
 //    vector of indices.
-type ShuffleIndexes struct {
+type shuffleIndexes struct {
 	prob float64
 }
 
-func NewShuffleIndexes(prob float64) *ShuffleIndexes {
-	return &ShuffleIndexes{
+func ShuffleIndexes(prob float64) Mutator {
+	return &shuffleIndexes{
 		prob: prob,
 	}
 }
 
-func (s *ShuffleIndexes) Mutate(individual *genome.Individual) {
+func (s *shuffleIndexes) Mutate(individual *genome.Individual) {
 	for i := range individual.Genome {
 		if rand.Float() < s.prob {
 			swapIndx := rand.Int(len(individual.Genome) - 1)

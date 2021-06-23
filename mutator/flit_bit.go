@@ -10,17 +10,17 @@ import (
 // attributes shall stay valid after the ``not`` operator is called on them.
 // The *indpb* argument is the probability of each attribute to be
 // flipped. This mutation is usually applied on boolean individuals.
-type FlitBit struct {
+type flitBit struct {
 	indpb float64 // Independent probability for each attribute to be flipped.
 }
 
-func NewFlitBit(indpb float64) *FlitBit {
-	return &FlitBit{
+func FlitBit(indpb float64) Mutator {
+	return &flitBit{
 		indpb: indpb,
 	}
 }
 
-func (f *FlitBit) Mutate(individual *genome.Individual) {
+func (f *flitBit) Mutate(individual *genome.Individual) {
 	for i := range individual.Genome {
 		if rand.Float() < f.indpb {
 			if individual.Genome[i] > 0.0 {

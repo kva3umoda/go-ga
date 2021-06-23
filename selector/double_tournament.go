@@ -1,7 +1,7 @@
 package selector
 
 
-// DoubleTournament - Tournament selection which use the size of the individuals in order
+// DoubleTournament - tournament selection which use the size of the individuals in order
 //    to discriminate good solutions. This kind of tournament is obviously
 //    useless with fixed-length representation, but has been shown to
 //    significantly reduce excessive growth of individuals, especially in GP,
@@ -21,7 +21,7 @@ package selector
 //    (see [Luke2002fighting]_).
 //    :param fit_attr: The attribute of individuals to use as selection criterion
 // def selDoubleTournament(individuals, k, fitness_size, parsimony_size, fitness_first, fit_attr="fitness"):
-//    """Tournament selection which use the size of the individuals in order
+//    """tournament selection which use the size of the individuals in order
 //    to discriminate good solutions. This kind of tournament is obviously
 //    useless with fixed-length representation, but has been shown to
 //    significantly reduce excessive growth of individuals, especially in GP,

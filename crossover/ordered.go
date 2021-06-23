@@ -10,16 +10,14 @@ import (
 //    individuals. The two individuals are modified in place. This crossover
 //    expects :term:`sequence` individuals of indices, the result for any other
 //    type of individuals is unpredictable.
-type Ordered struct {
-}
+type ordered struct{}
 
-func NewOrdered() *Ordered {
-	return &Ordered{
-	}
+func Ordered() Crossover {
+	return &ordered{}
 }
 
 //  TODO: Надо оптимизировать
-func (tp *Ordered) Crossing(ind1, ind2 *genome.Individual) {
+func (tp *ordered) Crossing(ind1, ind2 *genome.Individual) {
 	size := min(len(ind1.Genome), len(ind2.Genome))
 	a := rand.Int(size)
 	b := rand.Int(size)

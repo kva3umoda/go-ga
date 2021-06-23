@@ -25,13 +25,13 @@ const (
 func main() {
 	builder := go_ga.NewBuilder().
 		Population(POPULATION_SIZE).
-		Creator(population.NewBinaryPopulation(ONE_MAX_LENGTH)).
+		Creator(population.BinaryPopulation(ONE_MAX_LENGTH)).
 		CostFunction(oneMaxFitness).
-		Selector(selector.NewTournament(3)).
+		Selector(selector.Tournament(3)).
 		CrossoverProb(P_CROSSOVER).
-		Crossover(crossover.NewOnePoint()).
+		Crossover(crossover.OnePoint()).
 		MutatorProb(P_MUTATION).
-		Mutator(mutator.NewFlitBit(1.0/ONE_MAX_LENGTH)).
+		Mutator(mutator.FlitBit(1.0/ONE_MAX_LENGTH)).
 		Generation(MAX_GENERATIONS)
 
 	ga, err := builder.Build()

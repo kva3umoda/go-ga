@@ -8,15 +8,14 @@ import (
 // Executes a one point crossover on the input :term:`sequence` individuals.
 //    The two individuals are modified in place. The resulting individuals will
 //    respectively have the length of the other
-type OnePoint struct {
-}
+type onePoint struct {}
 
-func NewOnePoint() *OnePoint {
-	return &OnePoint{
+func OnePoint() Crossover {
+	return &onePoint{
 	}
 }
 
-func (op *OnePoint) Crossing(ind1, ind2 *genome.Individual) {
+func (op *onePoint) Crossing(ind1, ind2 *genome.Individual) {
 
 	size := min(len(ind1.Genome), len(ind2.Genome))
 
