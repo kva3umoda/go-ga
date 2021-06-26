@@ -14,7 +14,7 @@ package crossover
 //    This function uses the :func:`~random.randint` function from the python base
 //    :mod:`random` module.
 //    """
-//    size = min(len(ind1), len(ind2))
+//    size = Mini(len(ind1), len(ind2))
 //
 //    pt1 = random.randint(1, size)
 //    pt2 = random.randint(1, size - 1)

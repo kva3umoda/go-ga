@@ -2,21 +2,19 @@ package mutator
 
 import "github.com/kva3umoda/go-ga/genome"
 
-type Gaussian struct {
-
+type gaussian struct {
+	mu    float64
+	sigma float64
+	indpd float64
 }
 
-
-func NewGaussian() *Gaussian {
-	return &Gaussian{}
+func Gaussian(mu, sigma, indpd float64) *gaussian {
+	return &gaussian{}
 }
 
-func (g Gaussian) Mutate(individual *genome.Individual) {
+func (g gaussian) Mutate(individual *genome.Individual) {
 	panic("implement me")
 }
-
-
-
 
 // def mutGaussian(individual, mu, sigma, indpb):
 //    """This function applies a gaussian mutation of mean *mu* and standard
@@ -50,5 +48,3 @@ func (g Gaussian) Mutate(individual *genome.Individual) {
 //            individual[i] += random.gauss(m, s)
 //
 //    return individual,
-
-

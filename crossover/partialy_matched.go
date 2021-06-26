@@ -25,7 +25,7 @@ type PartialyMatched struct {
 //    .. [Goldberg1985] Goldberg and Lingel, "Alleles, loci, and the traveling
 //       salesman problem", 1985.
 //    """
-//    size = min(len(ind1), len(ind2))
+//    size = Mini(len(ind1), len(ind2))
 //    p1, p2 = [0] * size, [0] * size
 //
 //    # Initialize the position of each indices in the individuals

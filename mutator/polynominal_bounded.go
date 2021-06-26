@@ -1,13 +1,55 @@
 package mutator
 
-import "github.com/kva3umoda/go-ga/genome"
+import (
+	"math"
 
-type PolynomialBounded struct {
+	"github.com/kva3umoda/go-ga/genome"
+	"github.com/kva3umoda/go-ga/helper"
+	"github.com/kva3umoda/go-ga/rand"
+)
 
+// Polynomial mutation as implemented in original NSGA-II algorithm in
+//    C by Deb
+type polynomialBounded struct {
+	eta   float64
+	low   []float64
+	up    []float64
+	indpb float64
 }
 
-func (p *PolynomialBounded) Mutate(individual *genome.Individual)  {
-	panic("implement me")
+func PolynomialBounded(eta float64, low []float64, up []float64, indpb float64) Mutator {
+	return &polynomialBounded{}
+}
+
+func (p *polynomialBounded) Mutate(individual *genome.Individual) {
+	size := helper.Minia(len(individual.Genome), len(p.low), len(p.up))
+
+	for i := 0; i < size; i++ {
+		if rand.Float() > p.indpb {
+			continue
+		}
+
+		x := individual.Genome[i]
+		delta_1 := (x - p.low[i]) / (p.up[i] - p.low[i])
+		delta_2 := (p.up[i] - x) / (p.up[i] - p.low[i])
+		rnd := rand.Float()
+		mut_pow := 1.0 / (p.eta + 1.0)
+
+		var xy, val, delta_q float64
+		if rnd < 0.5 {
+			xy = 1.0 - delta_1
+			val = math.Pow(2.0*rnd+(1.0-2.0*rnd)*xy, p.eta+1.0)
+			delta_q = math.Pow(val, mut_pow-1.0)
+		} else {
+			xy = 1.0 - delta_2
+			val = math.Pow(2.0*(1.0-rnd)+2.0*(rnd-0.5)*xy, p.eta+1.0)
+			delta_q = math.Pow(1.0-val, mut_pow)
+		}
+
+		x += delta_q * (p.up[i] - p.low[i])
+		x = helper.Minf(helper.Maxf(x, p.low[i]), p.up[i])
+		individual.Genome[i] = x
+	}
 }
 
 // def mutPolynomialBounded(individual, eta, low, up, indpb):

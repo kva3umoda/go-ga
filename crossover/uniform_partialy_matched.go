@@ -2,6 +2,7 @@ package crossover
 
 import (
 	"github.com/kva3umoda/go-ga/genome"
+	"github.com/kva3umoda/go-ga/helper"
 	"github.com/kva3umoda/go-ga/rand"
 )
 
@@ -20,7 +21,7 @@ func UniformPartialMatched(prob float64) Crossover {
 }
 
 func (tp *uniformPartialyMatched) Crossing(ind1, ind2 *genome.Individual) {
-	size := min(len(ind1.Genome), len(ind2.Genome))
+	size := helper.Mini(len(ind1.Genome), len(ind2.Genome))
 	p1 := make([]float64, size)
 	p2 := make([]float64, size)
 	// Initialize the position of each indices in the individuals
@@ -66,7 +67,7 @@ func (tp *uniformPartialyMatched) Crossing(ind1, ind2 *genome.Individual) {
 //    .. [Cicirello2000] Cicirello and Smith, "Modeling GA performance for
 //       control parameter optimization", 2000.
 //    """
-//    size = min(len(ind1), len(ind2))
+//    size = Mini(len(ind1), len(ind2))
 //    p1, p2 = [0] * size, [0] * size
 //
 //    # Initialize the position of each indices in the individuals

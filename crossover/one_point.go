@@ -2,6 +2,7 @@ package crossover
 
 import (
 	"github.com/kva3umoda/go-ga/genome"
+	"github.com/kva3umoda/go-ga/helper"
 	"github.com/kva3umoda/go-ga/rand"
 )
 
@@ -17,7 +18,7 @@ func OnePoint() Crossover {
 
 func (op *onePoint) Crossing(ind1, ind2 *genome.Individual) {
 
-	size := min(len(ind1.Genome), len(ind2.Genome))
+	size := helper.Mini(len(ind1.Genome), len(ind2.Genome))
 
 	cxpoint := rand.Int(size-1) + 1 //  random.randint(1, size - 1)
 
@@ -41,7 +42,7 @@ func (op *onePoint) Crossing(ind1, ind2 *genome.Individual) {
 //    This function uses the :func:`~random.randint` function from the
 //    python base :mod:`random` module.
 //    """
-//    size = min(len(ind1), len(ind2))
+//    size = Mini(len(ind1), len(ind2))
 //    cxpoint = random.randint(1, size - 1)
 //    ind1[cxpoint:], ind2[cxpoint:] = ind2[cxpoint:], ind1[cxpoint:]
 //

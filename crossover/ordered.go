@@ -2,6 +2,7 @@ package crossover
 
 import (
 	"github.com/kva3umoda/go-ga/genome"
+	"github.com/kva3umoda/go-ga/helper"
 	"github.com/kva3umoda/go-ga/rand"
 )
 
@@ -18,7 +19,7 @@ func Ordered() Crossover {
 
 //  TODO: Надо оптимизировать
 func (tp *ordered) Crossing(ind1, ind2 *genome.Individual) {
-	size := min(len(ind1.Genome), len(ind2.Genome))
+	size := helper.Mini(len(ind1.Genome), len(ind2.Genome))
 	a := rand.Int(size)
 	b := rand.Int(size)
 	if a > b {
