@@ -1,5 +1,7 @@
 package helper
 
+import "math"
+
 func Mini(x, y int) int {
 	if x < y {
 		return x
@@ -41,4 +43,13 @@ func Maxf(x, y float64) float64 {
 		return x
 	}
 	return y
+}
+
+func Distance(p1, p2 []float64) float64 {
+	size := Mini(len(p1), len(p2))
+	sum := 0.0
+	for i := 0; i < size; i++ {
+		sum += math.Pow(p1[i]-p2[i], 2)
+	}
+	return math.Sqrt(sum)
 }

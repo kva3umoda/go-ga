@@ -1,9 +1,11 @@
 package fitness
 
-type FitnessFunc func(cost float64) float64
+import "github.com/kva3umoda/go-ga/genome"
+
+type FitnessFunc func(ind *genome.Individual)
 
 type Fitness interface {
-	Fitness(cost float64) float64
+	Fitness(ind *genome.Individual)
 }
 
 type function struct {
@@ -16,28 +18,32 @@ func Function(fitnessFunc FitnessFunc) Fitness {
 	}
 }
 
-func (f *function) Fitness(cost float64) float64 {
-	return f.fitnessFunc(cost)
+func (f *function) Fitness(ind *genome.Individual) {
+	f.fitnessFunc(ind)
+}
+
+// default fitness
+
+type defaultFitness struct {
+	weight float64
+}
+
+func DefaultFitness(weight float64) Fitness {
+	return &defaultFitness{
+		weight: weight,
+	}
+}
+
+func (df *defaultFitness) Fitness(ind *genome.Individual) {
+	ind.Fitness = ind.Cost * df.weight
 }
 
 // max fitness
-type max struct{}
-
 func Max() Fitness {
-	return &max{}
-}
-
-func (m *max) Fitness(cost float64) float64 {
-	return cost
+	return DefaultFitness(1.0)
 }
 
 // min fitness
-type min struct{}
-
 func Min() Fitness {
-	return &min{}
-}
-
-func (m *min) Fitness(cost float64) float64 {
-	return -1 * cost
+	return DefaultFitness(-1.0)
 }

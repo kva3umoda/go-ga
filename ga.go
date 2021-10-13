@@ -108,7 +108,7 @@ func (ga *GA) Crossing(pop *population.Population) {
 func (ga *GA) Fitness(pop *population.Population) {
 	for _, ind := range pop.Individuals {
 		ind.Cost = ga.costFunc(ind.Genome)
-		ind.Fitness = ga.fitness.Fitness(ind.Cost)
+		ga.fitness.Fitness(ind)
 		ga.stat.Add(ga.generation, ind.Cost)
 	}
 }
